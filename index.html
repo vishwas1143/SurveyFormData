@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Form</title>
+</head>
+<body>
+    <h1>Survey Form</h1>
+    <form id="surveyForm">
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" placeholder="Enter Your First Name" required><br><br>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" placeholder="Enter Your Last Name" required><br><br>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" required><br><br>
+
+        <label for="country">Country:</label>
+        <select id="country" required>
+            <option>India</option>
+            <option>USA</option>
+            <option>Canada</option>
+        </select><br><br>
+
+        <label>Gender:</label>
+        <input type="checkbox" id="gender_male">
+        <label for="gender_male">Male</label>
+        <input type="checkbox" id="gender_female">
+        <label for="gender_female">Female</label>
+        <input type="checkbox" id="gender_other">
+        <label for="gender_other">Other</label><br><br>
+
+        <label for="profession">Profession:</label>
+        <input type="text" id="profession" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Enter Your Email" required><br><br>
+
+        <label for="phone">Mobile Number:</label>
+        <input type="tel" id="phone" placeholder="Enter Your Mobile Number" required><br><br>
+
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </form>
+
+    <div id="popup" style="display: none;">
+        <h2>Selected Values:</h2>
+        <div id="popupContent"></div>
+        <button onclick="closePopup();">Close</button>
+    </div>
+
+    <script>
+        function closePopup() {
+            const popup = document.getElementById("popup");
+            popup.style.display = "none";
+        }
+
+        document.getElementById("surveyForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the default form submission
+            showAlert();
+        });
+
+        function showAlert() {
+            const form = document.getElementById("surveyForm");
+            const popup = document.getElementById("popup");
+            const popupContent = document.getElementById("popupContent");
+            
+            const selectedValues = [];
+            const inputs = form.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                if (input.type === "checkbox" && input.checked) {
+                    selectedValues.push(`${input.labels[0].textContent}: ${input.value}`);
+                } else if (input.type !== "checkbox") {
+                    selectedValues.push(`${input.labels[0].textContent}: ${input.value}`);
+                }
+            });
+
+            popupContent.innerHTML = selectedValues.join('<br>');
+            popup.style.display = "block";
+        }
+    </script>
+</body>
+</html>
